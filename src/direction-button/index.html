@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>可识别方向按钮</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --btn-color: #c7edef;
+        --text-color: hsl(0, 0%, 5%);
+      }
+
+      .dir-control {
+        background-color: #fff;
+        border: 2px solid var(--btn-color);
+        border-radius: 100px;
+        text-align: center;
+        line-height: 24px;
+        outline: transparent;
+        width: 300px;
+        height: 60px;
+        transition: transform 0.2s;
+        transform: translate(0, calc(var(--y, 0) * 1%)) scale(var(--scale, 1));
+      }
+
+      .dir-control:hover {
+        --y: -5;
+        --scale: 1.05;
+      }
+
+      .dir-control:active {
+        --y: 0;
+        --scale: 0.95;
+      }
+
+      span {
+        position: absolute;
+        bottom: -2px;
+        left: -2px;
+        top: -2px;
+        right: -2px;
+        clip-path: var(--clip);
+        z-index: 1;
+      }
+
+      span:nth-of-type(1) {
+        --clip: polygon(0 0, 100% 0, 50% 50%);
+      }
+
+      span:nth-of-type(2) {
+        --clip: polygon(50% 50%, 100% 0, 100% 100%);
+      }
+
+      span:nth-of-type(3) {
+        --clip: polygon(100% 100%, 0 100%, 50% 50%, 50% 50%);
+      }
+
+      span:nth-of-type(4) {
+        --clip: polygon(0 100%, 0 0, 50% 50%);
+      }
+
+      span:nth-of-type(1):hover,
+      span:nth-of-type(2):hover,
+      span:nth-of-type(3):hover,
+      span:nth-of-type(4):hover {
+        --clip: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        z-index: 2;
+      }
+
+      span:nth-of-type(1):hover ~ b:nth-of-type(1),
+      span:nth-of-type(2):hover ~ b:nth-of-type(2),
+      span:nth-of-type(3):hover ~ b:nth-of-type(3),
+      span:nth-of-type(4):hover ~ b:nth-of-type(4) {
+        --clip: inset(0 0 50% 0);
+      }
+
+      b {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 100px;
+        text-align: center;
+        line-height: 60px;
+        clip-path: var(--clip);
+        transition: clip-path 0.25s ease;
+        background: var(--btn-color);
+      }
+
+      b:nth-of-type(1) {
+        --clip: inset(0 0 100% 0);
+      }
+
+      b:nth-of-type(2) {
+        --clip: inset(0 0 0 100%);
+      }
+
+      b:nth-of-type(3) {
+        --clip: inset(100% 0 0 0);
+      }
+
+      b:nth-of-type(4) {
+        --clip: inset(0 100% 0 0);
+      }
+    </style>
+  </head>
+
+  <body class="">
+    <main class="grid h-screen w-screen place-items-center bg-gray-900">
+      <div class="grid grid-cols-1 gap-1">
+        <button
+          role="button"
+          class="
+            dir-control
+            relative
+            flex
+            items-center
+            justify-center
+            font-bold
+          "
+        >
+          Click Me
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <b aria-hidden="true">Click Me</b>
+          <b aria-hidden="true">Click Me</b>
+          <b aria-hidden="true">Click Me</b>
+          <b aria-hidden="true">Click Me</b>
+        </button>
+      </div>
+    </main>
+  </body>
+</html>
